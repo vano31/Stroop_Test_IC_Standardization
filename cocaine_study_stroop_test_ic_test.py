@@ -4,11 +4,11 @@ import numpy, random, csv, json, os, openpyxl
 from openpyxl import Workbook
 
 
-expInfo = {'Subject_ID': ' ', 'Session_Number':' '} ###Change to subject id
+expInfo = {'Subject ID': '', 'Session Number':'', 'Desired Percentage Correct (in Integers)':'' } ###Change to subject id
 expInfo['dateStr'] = data.getDateStr()
 
 ########present a dialogue to change params
-dlg = gui.DlgFromDict(expInfo, title='Cocaine Study Stroop Test Tutorial', fixed=['dateStr'])
+dlg = gui.DlgFromDict(expInfo, title='Cocaine Study Stroop Test Tutorial', fixed=['dateStr'], order=['Subject ID','Session Number','Desired Percentage Correct (in Integers)'] )
 if dlg.OK:
     toFile('lastParams.pickle', expInfo) #save params to file for next time
 else:
@@ -19,7 +19,7 @@ globalClock = core.Clock()
 
 
 ############make a csv file to store the data
-fileName = expInfo['Subject_ID'] + '_' + expInfo['Session_Number'] + '_CocaineStroopTest_IC_Tutorial' + expInfo['dateStr']
+fileName = expInfo['Subject ID'] + '_' + expInfo['Session Number'] + '_' + expInfo['Desired Percentage Correct (in Integers)'] + '_CocaineStroopTest_IC_Tutorial' + expInfo['dateStr']
 dataFile = open('data/' + fileName + '.csv', 'w') # a simple text file with comma seperated values
 dataFile.write('sequence,thisN,thisRepN,word,wordtype,number_on_screen,correctAnswer,key_pressed,correct,time_button_pressed_relative, buttonClickedList, time_word_shown_global, time_button_pressed_global, time_word_gone_global, time_cross_shown_global, time_cross_gone_global \n')
 #time_fixation_cross_appeared,time_fixation_cross_stopped,duration_fixation_cross,time_word_appeared,time_word_stopped,duration_word --> Will not use these because these are frame based
@@ -68,8 +68,8 @@ seq_2_2_ic = data.TrialHandler(trialList=personal_word_inserter(preseq_2_2_ic),n
 seq_3_2_ic = data.TrialHandler(trialList=personal_word_inserter(preseq_3_2_ic),nReps=1,method='sequential',originPath=None)
 
 
-#win = visual.Window(fullscr=True,allowGUI=True, checkTiming=True)
-win = visual.Window([800,800])
+win = visual.Window(fullscr=True,allowGUI=True, checkTiming=True)
+#win = visual.Window([800,800])
 #event.globalKeys.add(key=quitKey, func=forceQuit)
 welcome_message = visual.TextStim(win, pos=[0,0], text='Welcome to the Stroop Test (Tutorial)! Press t to continue.')
 fixation_cross = visual.TextStim(win, text="+", height=1)
@@ -123,7 +123,8 @@ def Loop(first_seq, first_seqname):
     correctCounter = 0
     
     #Desired Correct Percentage
-    desiredCorrectPercentage = 80
+    #desiredCorrectPercentage = 80
+    desiredCorrectPercentage = int(expInfo['Desired Percentage Correct (in Integers)'])
     
     for thisIncrement in first_seq:
         

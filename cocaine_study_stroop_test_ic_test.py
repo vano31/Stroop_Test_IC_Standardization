@@ -71,27 +71,27 @@ seq_3_2_ic = data.TrialHandler(trialList=personal_word_inserter(preseq_3_2_ic),n
 win = visual.Window(fullscr=True,allowGUI=True, checkTiming=True)
 #win = visual.Window([800,800])
 #event.globalKeys.add(key=quitKey, func=forceQuit)
-welcome_message = visual.TextStim(win, pos=[0,0], text='Welcome to the Stroop Test (Tutorial)! Press t to continue.')
+welcome_message = visual.TextStim(win, pos=[0,0], text='Welcome to the Stroop Test (Tutorial)! ', height=0.20)
 fixation_cross = visual.TextStim(win, text="+", height=1)
-instruction_1_text = 'In this task you will count the number of words you see on the screen' + '\n' + 'Then press the button as fast as you can to indicate the number of words you counted.' + '\n' + 'Let\'s practice! Press BUTTON 1 (index finger) now'
-instruction_2_text = 'In this task you will count the number of words you see on the screen' + '\n' + 'Then press the button as fast as you can to indicate the number of words you counted.' + '\n' + 'Let\'s practice! Press BUTTON 2 (middle finger) now'
-instruction_3_text = 'In this task you will count the number of words you see on the screen' + '\n' + 'Then press the button as fast as you can to indicate the number of words you counted.' + '\n' + 'Let\'s practice! Press BUTTON 3 (ring finger) now'
-instruction_4_text = 'In this task you will count the number of words you see on the screen' + '\n' + 'Then press the button as fast as you can to indicate the number of words you counted.' + '\n' + 'Let\'s practice! Press BUTTON 4 (small finger/pinky) now'
+instruction_1_text = 'Count the number of words you see on the screen.' + '\n\n' + 'Press the button that represents the amount of words you counted as fast as you can.' + '\n\n' + 'Let\'s practice! Press BUTTON 1 (index finger) now'
+instruction_2_text = 'Count the number of words you see on the screen.' + '\n\n' + 'Press the button that represents the amount of words you counted as fast as you can.' + '\n\n' + 'Let\'s practice! Press BUTTON 2 (middle finger) now'
+instruction_3_text = 'Count the number of words you see on the screen.' + '\n\n' + 'Press the button that represents the amount of words you counted as fast as you can.' + '\n\n' + 'Let\'s practice! Press BUTTON 3 (ring finger) now'
+instruction_4_text = 'Count the number of words you see on the screen.' + '\n\n' + 'Press the button that represents the amount of words you counted as fast as you can.' + '\n\n' + 'Let\'s practice! Press BUTTON 4 (small/pinky finger) now'
 start_screen_text = 'Great! Now let\'s start'
 get_ready_text = 'Get Ready'
 
-instruction_1_message = visual.TextStim(win, pos=[0,0], text=instruction_1_text)
-instruction_2_message = visual.TextStim(win, pos=[0,0], text=instruction_2_text)
-instruction_3_message = visual.TextStim(win, pos=[0,0], text=instruction_3_text)
-instruction_4_message = visual.TextStim(win, pos=[0,0], text=instruction_4_text)
+instruction_1_message = visual.TextStim(win, pos=[0,0], text=instruction_1_text, height=0.13)
+instruction_2_message = visual.TextStim(win, pos=[0,0], text=instruction_2_text, height=0.13)
+instruction_3_message = visual.TextStim(win, pos=[0,0], text=instruction_3_text, height=0.13)
+instruction_4_message = visual.TextStim(win, pos=[0,0], text=instruction_4_text, height=0.13)
 
-start_screen_message = visual.TextStim(win, pos=[0,0], text=start_screen_text)
-get_ready_message = visual.TextStim(win, pos=[0,0], text=get_ready_text)
+start_screen_message = visual.TextStim(win, pos=[0,0], text=start_screen_text, height=0.20)
+get_ready_message = visual.TextStim(win, pos=[0,0], text=get_ready_text, height=0.20)
 blank_infinite = visual.TextStim(win, pos=[0,0], text="")
-goodbye_message = visual.TextStim(win, pos=[0,0], text="Thanks for participating!")
+goodbye_message = visual.TextStim(win, pos=[0,0], text="Thanks for participating!", height=0.20)
 
-redo_infinite_secondtrial = visual.TextStim(win, pos=[0,0], text="You will now proceed to the second trial of the task")
-redo_infinite_thirdtrial = visual.TextStim(win, pos=[0,0], text="You will now proceed to the third and last trial of the task")
+redo_infinite_secondtrial = visual.TextStim(win, pos=[0,0], text="You will now proceed to the second trial of the task", height=0.20)
+redo_infinite_thirdtrial = visual.TextStim(win, pos=[0,0], text="You will now proceed to the third and last trial of the task", height=0.20)
 
 
 #Definition of Repeating Words Function
@@ -114,7 +114,7 @@ def Loop(first_seq, first_seqname):
     threshold_reached = None
     
     ####Main Loop###############################################################################################################################
-    new_img = visual.TextStim(win, pos=[0,0], height=0.2)
+    new_img = visual.TextStim(win, pos=[0,0], height=0.2, bold=True)
     
     ##Total size of sequence
     sequence_size = 0
@@ -135,6 +135,9 @@ def Loop(first_seq, first_seqname):
         if len(quitbutton) > 0:
             for a in quitbutton:
                 if a == 'q':
+                    quitTime = str(globalClock.getTime())
+                    dataFile.write(f"\nQuit_Time,{quitTime}")
+                    dataFile.close()
                     core.quit()
         
         
@@ -146,7 +149,7 @@ def Loop(first_seq, first_seqname):
         word = thisIncrement["word"]
         wordtype = thisIncrement["type"]
         number_on_screen = thisIncrement["number"]
-        correctAnswer = thisIncrement["answer"]
+        correctAnswer = thisIncrement["answer"] - 1
         thisN = first_seq.thisN
         thisRepN = first_seq.thisRepN
 
@@ -175,12 +178,15 @@ def Loop(first_seq, first_seqname):
             if len(quitbutton) > 0:
                 for a in quitbutton:
                     if a == 'q':
+                        quitTime = str(globalClock.getTime())
+                        dataFile.write(f"\nQuit_Time,{quitTime}")
+                        dataFile.close()
                         core.quit()
             
             #new_img.text = displaytext 
             new_img.draw() 
             win.flip() 
-            allKeys = event.getKeys(keyList=['2','3','4','5'], timeStamped=True) 
+            allKeys = event.getKeys(keyList=['1','2','3','4'], timeStamped=True) 
             if len(allKeys) > 0: 
                 time_button_pressed_relative = str(trialClock.getTime()) 
                 allKeys[0][1] = time_button_pressed_relative  
@@ -219,6 +225,9 @@ def Loop(first_seq, first_seqname):
             if len(quitbutton) > 0:
                 for a in quitbutton:
                     if a == 'q':
+                        quitTime = str(globalClock.getTime())
+                        dataFile.write(f"\nQuit_Time,{quitTime}")
+                        dataFile.close()
                         core.quit()
             
             fixation_cross.draw()
@@ -255,6 +264,9 @@ def Loop(first_seq, first_seqname):
         if len(quitbutton) > 0:
             for a in quitbutton:
                 if a == 'q':
+                    quitTime = str(globalClock.getTime())
+                    dataFile.write(f"\nQuit_Time,{quitTime}")
+                    dataFile.close()
                     core.quit()
         #Remember to record appearance of fixation cross ##Actually, maybe not...
      
@@ -274,34 +286,49 @@ for x in range(18):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
 #3. Instruction 1
 instruction_1_message.draw()
 win.flip()
-press_2 = event.waitKeys(keyList=["2",'q'], timeStamped=True)
+press_2 = event.waitKeys(keyList=["1",'q'], timeStamped=True)
 if press_2[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #4. Instruction 2
 instruction_2_message.draw()
 win.flip()
-press_3 = event.waitKeys(keyList=["3",'q'], timeStamped=True)
+press_3 = event.waitKeys(keyList=["2",'q'], timeStamped=True)
 if press_3[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #5. Instruction 3
 instruction_3_message.draw()
 win.flip()
-press_4 = event.waitKeys(keyList=["4", 'q'],timeStamped=True)
+press_4 = event.waitKeys(keyList=["3", 'q'],timeStamped=True)
 if press_4[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #6. Instruction 4
 instruction_4_message.draw()
 win.flip()
-press_5 = event.waitKeys(keyList=["5", 'q'], timeStamped=True)
+press_5 = event.waitKeys(keyList=["4", 'q'], timeStamped=True)
 if press_5[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #7. Display start screen for 5 seconds (300 frames)
@@ -312,6 +339,9 @@ for x in range(300):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
     start_screen_message.draw()
@@ -325,6 +355,9 @@ for x in range(600):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
     get_ready_message.draw()
@@ -338,6 +371,9 @@ for x in range(18):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
     fixation_cross.draw()
@@ -357,6 +393,9 @@ if answer_1 == True:
         if len(quitbutton) > 0:
             for a in quitbutton:
                 if a == 'q':
+                    quitTime = str(globalClock.getTime())
+                    dataFile.write(f"\nQuit_Time,{quitTime}")
+                    dataFile.close()
                     core.quit()
         
         goodbye_message.draw()
@@ -372,6 +411,9 @@ redo_infinite_secondtrial.draw()
 win.flip()
 press_b = event.waitKeys(keyList=["b", 'q'], timeStamped=True)
 if press_b[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #13 Display Get Ready (press t to continue)
@@ -379,6 +421,9 @@ get_ready_message.draw()
 win.flip()
 press_t_2 = event.waitKeys(keyList=["t", 'q'], timeStamped=True)
 if press_t_2[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #14. Display 300ms (18 frames) Cross Fixation Prior to Loop 2
@@ -389,6 +434,9 @@ for x in range(18):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
     fixation_cross.draw()
@@ -408,6 +456,9 @@ if answer_2 == True:
         if len(quitbutton) > 0:
             for a in quitbutton:
                 if a == 'q':
+                    quitTime = str(globalClock.getTime())
+                    dataFile.write(f"\nQuit_Time,{quitTime}")
+                    dataFile.close()
                     core.quit()
         
         goodbye_message.draw()
@@ -424,6 +475,9 @@ redo_infinite_thirdtrial.draw()
 win.flip()
 press_b_2 = event.waitKeys(keyList=["b", 'q'], timeStamped=True)
 if press_b_2[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #18 Display Get Ready (press t to continue)
@@ -431,6 +485,9 @@ get_ready_message.draw()
 win.flip()
 press_t_3 = event.waitKeys(keyList=["t", 'q'], timeStamped=True)
 if press_t_3[0][0] == 'q':
+    quitTime = str(globalClock.getTime())
+    dataFile.write(f"\nQuit_Time,{quitTime}")
+    dataFile.close()
     core.quit()
 
 #19. Display 300ms (18 frames) Cross Fixation Prior to Loop 3
@@ -441,6 +498,9 @@ for x in range(18):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
     fixation_cross.draw()
@@ -459,6 +519,9 @@ for x in range(1200):
     if len(quitbutton) > 0:
         for a in quitbutton:
             if a == 'q':
+                quitTime = str(globalClock.getTime())
+                dataFile.write(f"\nQuit_Time,{quitTime}")
+                dataFile.close()
                 core.quit()
     
     goodbye_message.draw()

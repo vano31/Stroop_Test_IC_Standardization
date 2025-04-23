@@ -5,13 +5,16 @@ Purpose
 The Stroop Task is a widely used cognitive task designed to assess selective attention, cognitive flexibility, and processing speed. In this task, participants are required to respond to the number of words while ignoring conflicting information (e.g., the word's semantic meaning), making it useful for evaluating response accuracy and reaction time (RT) under conditions of cognitive interference.
 The Stroop Task Training program will be administered on a study laptop and is designed to ensure participants have an adequate understanding of the task prior to completing the Cocaine Stroop Task during the MRI scan. This training phase is essential to avoid scheduling and resource losses related to participants being unable to complete the task in the scanner due to inability to comprehend the task, thus must be done before the MRI scan is scheduled.
 The training task records the participant’s accuracy and RT in response to congruent versus incongruent word-number stimuli. Participants will be asked to press buttons 1 through 4 on the keyboard to indicate how many times a word appears on the screen, regardless of what the word says. For example:
+
 •	Congruent trial: the word “THREE” displayed three times.
 •	Incongruent trial: the word “FOUR” displayed three times.
+
 The contrast between responses to incongruent versus congruent trials forms the basis for evaluating task comprehension.
 Training Location and Timing
 This training will take place in a designated office or TMS lab space using a study laptop, prior to the participant undergoing the Cocaine Stroop Task in the MRI scanner.
 Accuracy Requirement and Training Protocol
 To proceed to the scanner-based Cocaine Stroop Task, participants must achieve a predetermined accuracy threshold for the incongruent vs. congruent contrast. Participants are allowed up to three attempts to meet this criterion. The training procedure is as follows:
+
 1.	First Attempt: The participant completes the Stroop Task training module.
 2.	If accuracy threshold is met, no further attempts are needed.
 If the accuracy threshold is not met, the study staff member will pause to review the task with the participant, asking them to explain the instructions in their own words to identify any misunderstandings. 
